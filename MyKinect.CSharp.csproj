@@ -74,7 +74,7 @@
     <Compile Include="Assets\Script\Kinect\KinectWrapper\KinectRecorder.cs" />
     <Compile Include="Assets\Script\Kinect\KinectWrapper\KinectSensor.cs" />
     <Compile Include="Assets\Script\Kinect\KinectWrapper\SkeletonWrapper.cs" />
-    <Compile Include="Assets\Taptap\Cylinder.cs" />
+    <Compile Include="Assets\Taptap\HitCylinder.cs" />
     <Compile Include="Assets\Taptap\TempoSphere.cs" />
   </ItemGroup>
   <ItemGroup>
