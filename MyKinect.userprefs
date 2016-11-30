@@ -1,8 +1,12 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Taptap\SphereGenerator.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Taptap\GameScript.cs">
     <Files>
-      <File FileName="Assets\Taptap\SphereGenerator.cs" Line="13" Column="37" />
+      <File FileName="Assets\Taptap\HitCylinder.cs" Line="1" Column="1" />
+      <File FileName="Assets\Taptap\GameScript.cs" Line="20" Column="48" />
+      <File FileName="Assets\Taptap\SphereGenerator.cs" Line="28" Column="59" />
+      <File FileName="Assets\Taptap\TempoSphere.cs" Line="11" Column="56" />
+      <File FileName="Assets\Taptap\LevelReader.cs" Line="56" Column="18" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -4,16 +4,19 @@ using System.Collections;
 
 public class TempoSphere : MonoBehaviour {
 
-    public GameObject sphere;
+	public float speed;
+	public Color color = Color.white;
 
-	// Use this for initialization
 	void Start () {
-        transform.Translate(0, 1, 40);
-        GameObject instanciatedObject = (GameObject) Instantiate(sphere, transform.position, transform.rotation);
+		GetComponent<Material> ().SetColor ("_Color", color);
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
-	
+		transform.Translate (0.0f, 0.0f, -speed);
+
+		// Détruit la sphère si elle dépasse du champ de la caméra
+		if (transform.position.z < -10) {
+			Destroy (gameObject);
+		}
 	}
 }

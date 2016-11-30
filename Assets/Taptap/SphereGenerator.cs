@@ -1,21 +1,33 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class SphereGenerator : MonoBehaviour {
 
 	public GameObject spherePrefab;
-	public float speed = 0.1f;
+	public Color sphereColor = Color.white;
 
-	private GameObject currentSphere;
+	private const float delay = 1f;
+	private float lastTime = 0f;
 
 	void Start () {
-		Vector3 initialPos = new Vector3 (transform.position.x, 
-			transform.position.y -3, transform.position.z);
-		currentSphere = GameObject.Instantiate (spherePrefab);
-		currentSphere.transform.Translate (initialPos);
+		
 	}
 	
 	void Update () {
-		currentSphere.transform.Translate (0f, 0f, -speed);
+		if ((Time.time - lastTime) > delay) {
+			lastTime = Time.time;
+			GameObject sphere = newSphere();
+		}
 	}
+
+	private GameObject newSphere() {
+		Vector3 initialPos = new Vector3 (transform.position.x, 
+			transform.position.y -3, transform.position.z);
+		GameObject sphere = GameObject.Instantiate (spherePrefab);
+		sphere.transform.Translate (initialPos);
+		sphere.name = "Sphere";
+		sphere.GetComponent<TempoSphere> ().color = sphereColor;
+		return sphere;
+	}
+
+
 }

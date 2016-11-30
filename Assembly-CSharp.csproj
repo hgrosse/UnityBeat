@@ -56,11 +56,14 @@
      <Compile Include="Assets\Script\Kinect\KinectWrapper\KinectRecorder.cs" />
      <Compile Include="Assets\Script\Kinect\KinectWrapper\KinectSensor.cs" />
      <Compile Include="Assets\Script\Kinect\KinectWrapper\SkeletonWrapper.cs" />
+     <Compile Include="Assets\Taptap\GameScript.cs" />
      <Compile Include="Assets\Taptap\HitCylinder.cs" />
+     <Compile Include="Assets\Taptap\LevelReader.cs" />
      <Compile Include="Assets\Taptap\SphereGenerator.cs" />
      <Compile Include="Assets\Taptap\TempoSphere.cs" />
      <None Include="Assets\Asset\Shaders\Normal-Diffuse.shader" />
      <None Include="Assets\Aubergine\Store Demos\Fire Shader\Readme.txt" />
+     <None Include="Assets\Taptap\Resources\KnockOnWood.txt" />
      <None Include="Assets\Resources\Aubergine\Shaders\Object\BaseFX\Fire-Pro.shader" />
      <None Include="Assets\Resources\Aubergine\Shaders\Object\BaseFX\Fire.shader" />
      <None Include="Assets\Aubergine\Store Demos\Fire Shader\Diffuse-Fire.shader" />
