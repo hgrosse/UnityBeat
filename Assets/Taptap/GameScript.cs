@@ -4,79 +4,85 @@ using AssemblyCSharp;
 
 public class GameScript : MonoBehaviour {
 
+	/**
+	 * Modèle de la sphère à générer.
+	 */
 	public GameObject spherePrefab;
+
+	private const float THRESHOLD = 0.1f;
+
+	private Vector3[] mStartPositions = new Vector3[4];
+	private string[] mTextures = new string[] {
+		"red_fire", "blue_fire", "green_fire", "yellow_fire"
+	};
 
 	private int mScore;
 	private GUIText mGUIScore;
 	private LevelReader mLevel;
-	private Vector3[] mStartPositions = new Vector3[4];
+	private AudioSource mAudio;
 
-	private float ellapsedTime = 0f;
+	private float mLastTime;
 
 	void Start () {
-		mStartPositions [0] = new Vector3 (-4f, 0f, 100f);
-		mStartPositions [1] = new Vector3 (4f, 0f, 100f);
-		mStartPositions [2] = new Vector3 (-4f, -5f, 100f);
-		mStartPositions [3] = new Vector3 (4f, -5f, 100f);
+		mAudio = GameObject.FindObjectOfType<AudioSource> ();
 
-		mGUIScore = GetComponent<GUIText> ();
-		resetScore ();
-		mLevel = new LevelReader ("Assets/TapTap/Resources");
-		mLevel.loadLevel ("KnockOnWood.txt");
-	}
+		mStartPositions [0] = new Vector3 (-4f, 3f, 50f);
+		mStartPositions [1] = new Vector3 (4f, 3f, 50f);
+		mStartPositions [2] = new Vector3 (-4f, -2f, 50f);
+		mStartPositions [3] = new Vector3 (4f, -2f, 50f);
 
-	void Update () {
-		if (ellapsedTime > 0.1) {
-			// Tous les 10èmes de seconde
-			if (mLevel.hasNext ()) {
-				// S'il y a encore des notes à lire
-				int beat = mLevel.nextBeat ();
-				for (int i = 0; i < 4; i++) {
-					if (LevelReader.decodeBeat(beat, i)) {
-						// Générer une sphère
-						generateSphere(mStartPositions[i], getColor(i));
-					}
-				}
-			}
-		}
-		ellapsedTime += Time.deltaTime;
+		mGUIScore = GetComponent<GUIText>();
+		ResetScore ();
+		mLevel = new LevelReader ("Assets/TapTap/Levels");
+		mLevel.LoadLevel ("KnockOnWood");
+
+		mAudio.PlayDelayed (2f);
+		InvokeRepeating ("Perform", 0f, THRESHOLD);
 	}
 		
-	private void updateScore() {
+	private void UpdateScore() {
 		mGUIScore.text = "Score : " + mScore;
 	}
 
-	public void addScore(int points) {
+	/**
+	 * Ajoute un nombre de points au score du joueur.
+	 */
+	public void AddScore(int points) {
 		if (points > 0) {
 			mScore += points;
-			updateScore ();
+			UpdateScore ();
 		}
 	}
 
-	public void resetScore() {
+	/**
+	 * Réinitialise le score.
+	 */
+	public void ResetScore() {
 		mScore = 0;
-		updateScore ();
+		UpdateScore ();
 	}
 
-	private void generateSphere(Vector3 position, Color color) {
+	/**
+	 * Crée dynamiquement une nouvelle sphère de la couleur donnée,
+	 * et la place à la position précisée par le Vector.
+	 */
+	private void GenerateSphere(Vector3 position, string texture) {
 		GameObject sphere = GameObject.Instantiate (spherePrefab);
-		sphere.transform.Translate (position);
+		sphere.transform.position = position;
 		sphere.name = "Sphere";
-		sphere.GetComponent<TempoSphere> ().color = color;
+		sphere.GetComponent<Renderer> ().material.mainTexture = Resources.Load (texture) as Texture;
 	}
 
-	private Color getColor(int pos) {
-		switch (pos) {
-		case 0:
-			return Color.red;
-		case 1:
-			return Color.blue;
-		case 2:
-			return Color.green;
-		case 3:
-			return Color.yellow;
-		default:
-			return Color.white;
+	private void Perform() {
+		if (mLevel.HasNext ()) {
+			// S'il y a encore des notes à lire
+			int beat = mLevel.NextBeat ();
+			for (int i = 0; i < 4; i++) {
+				if (LevelReader.DecodeBeat (beat, i)) {
+					// Générer une sphère
+					GenerateSphere (mStartPositions [i], mTextures[i]);
+				}
+			}
 		}
 	}
 }

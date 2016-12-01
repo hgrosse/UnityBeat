@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class HitCylinder : MonoBehaviour {
-
+	
     public Color defaultColor;
     public Color pressedColor;
 
@@ -15,45 +15,52 @@ public class HitCylinder : MonoBehaviour {
 		mGameInstance = camera.GetComponent<GameScript> ();
         mRenderer = GetComponent<Renderer>();
 		mHitSphere = null;
-        toggleColor(false);
+        ToggleColor(false);
     }
 
 	void Update () {
 	    
 	}
 
+	/**
+	 * Evènement déclenché lorsqu'un autre GameObject entre en contact
+	 * avec ce cylindre.
+	 * Si c'est une sphère, on l'enregistre.
+	 * Sinon, s'il y a une sphère enregistrée, on la détruit et on gagne des points.
+	 */
     void OnTriggerEnter(Collider other) {
-		toggleColor(true);
 		if ("Sphere".Equals (other.gameObject.name)) {
 			// C'est une sphère !
 			mHitSphere = other.gameObject;
-			Debug.Log ("Sphere entered : " + mHitSphere);
 		} else {
-			// C'est un bras !
-			Debug.Log ("Enter trigger with " + other.gameObject.name);
-
+			ToggleColor(true);
 			if (mHitSphere != null) {
 				// Gagner des points s'il y a une sphère
-				Debug.Log("Earned 50 points");
-				mGameInstance.addScore (50);
+				mGameInstance.AddScore (50);
 				Destroy (mHitSphere);
 				mHitSphere = null;
 			}
 		}
     }
-		
+
+	/**
+	 * Evènement déclenché lorsqu'un autre GameObject n'est plus en contact
+	 * avec ce cylindre.
+	 * Si c'est une sphère, on l'oublie.
+	 */
     void OnTriggerExit(Collider other) {
-		toggleColor(false);
+		ToggleColor(false);
 		if ("Sphere".Equals (other.gameObject.name)) {
 			// La sphère est sortie
-			Debug.Log ("Sphere exited : " + mHitSphere);
 			mHitSphere = null;
-		} else {
-			Debug.Log("Exit trigger with " + other.gameObject.name);
 		}
     }
 
-    private void toggleColor(bool pressed) {
+	/**
+	 * Change la couleur du cylindre en fonction 
+	 * de son état avec/sans contact avec un autre objet.
+	 */
+    private void ToggleColor(bool pressed) {
         mRenderer.material.SetColor("_Color", pressed ? pressedColor : defaultColor);
     }
 }

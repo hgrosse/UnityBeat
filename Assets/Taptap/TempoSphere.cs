@@ -5,18 +5,34 @@ using System.Collections;
 public class TempoSphere : MonoBehaviour {
 
 	public float speed;
-	public Color color = Color.white;
+
+	private const float THRESHOLD = .02f;
+
+	private float mLastTime;
 
 	void Start () {
-		GetComponent<Material> ().SetColor ("_Color", color);
+		mLastTime = 0f;
+		InvokeRepeating ("GoForward", 0f, THRESHOLD);
 	}
 
-	void Update () {
-		transform.Translate (0.0f, 0.0f, -speed);
+	void FixedUpdate() {
 
-		// Détruit la sphère si elle dépasse du champ de la caméra
+		// Détruit la sphère si elle dépasse le champ de la caméra
 		if (transform.position.z < -10) {
 			Destroy (gameObject);
 		}
+	}
+
+	private bool ShouldMove() {
+		float timestamp = Time.time;
+		if ((timestamp - mLastTime) >= THRESHOLD) {
+			mLastTime = timestamp;
+			return true;
+		}
+		return false;
+	}
+
+	private void GoForward() {
+		transform.Translate (0.0f, 0.0f, -speed);
 	}
 }
