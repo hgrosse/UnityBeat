@@ -20,10 +20,6 @@ public class HitCylinder : MonoBehaviour {
         ToggleColor(false);
     }
 
-	void Update () {
-	    
-	}
-
 	/**
 	 * Evènement déclenché lorsqu'un autre GameObject entre en contact
 	 * avec ce cylindre.

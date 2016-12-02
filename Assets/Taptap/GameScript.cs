@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using AssemblyCSharp;
+using UnityEngine.SceneManagement;
 
 public class GameScript : MonoBehaviour {
 
@@ -16,6 +17,7 @@ public class GameScript : MonoBehaviour {
 		"disco_red", "disco_blue", "disco_green", "disco_yellow"
 	};
 
+	private int mCombo;
 	private int mScore;
 	private GUIText mGUIScore;
 	private LevelReader mLevel;
@@ -59,6 +61,7 @@ public class GameScript : MonoBehaviour {
 	 */
 	public void ResetScore() {
 		mScore = 0;
+		mCombo = 0;
 		UpdateScore ();
 	}
 
@@ -90,6 +93,6 @@ public class GameScript : MonoBehaviour {
 	}
 
 	private void EndGame() {
-		Application.Quit ();
+		SceneManager.LoadScene ("MainMenu");
 	}
 }
