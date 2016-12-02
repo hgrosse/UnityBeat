@@ -5,13 +5,9 @@ using System.Collections;
 public class TempoSphere : MonoBehaviour {
 
 	public float speed;
-
 	private const float THRESHOLD = .02f;
 
-	private float mLastTime;
-
 	void Start () {
-		mLastTime = 0f;
 		InvokeRepeating ("GoForward", 0f, THRESHOLD);
 	}
 
@@ -21,15 +17,6 @@ public class TempoSphere : MonoBehaviour {
 		if (transform.position.z < -10) {
 			Destroy (gameObject);
 		}
-	}
-
-	private bool ShouldMove() {
-		float timestamp = Time.time;
-		if ((timestamp - mLastTime) >= THRESHOLD) {
-			mLastTime = timestamp;
-			return true;
-		}
-		return false;
 	}
 
 	private void GoForward() {

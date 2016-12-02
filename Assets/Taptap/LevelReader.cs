@@ -70,7 +70,7 @@ namespace AssemblyCSharp
 		/**
 		 * Indique si un battement doit générer une sphère pour un cylindre donné.
 		 */
-		public static bool DecodeBeat(int beat, int index) {
+		public static bool DecodedBeat(int beat, int index) {
 			switch (index) {
 			case 0: // Top left
 				return (beat & TOP_LEFT) != 0;

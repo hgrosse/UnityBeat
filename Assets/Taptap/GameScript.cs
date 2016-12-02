@@ -13,7 +13,7 @@ public class GameScript : MonoBehaviour {
 
 	private Vector3[] mStartPositions = new Vector3[4];
 	private string[] mTextures = new string[] {
-		"red_fire", "blue_fire", "green_fire", "yellow_fire"
+		"disco_red", "disco_blue", "disco_green", "disco_yellow"
 	};
 
 	private int mScore;
@@ -78,11 +78,18 @@ public class GameScript : MonoBehaviour {
 			// S'il y a encore des notes à lire
 			int beat = mLevel.NextBeat ();
 			for (int i = 0; i < 4; i++) {
-				if (LevelReader.DecodeBeat (beat, i)) {
+				if (LevelReader.DecodedBeat (beat, i)) {
 					// Générer une sphère
-					GenerateSphere (mStartPositions [i], mTextures[i]);
+					GenerateSphere (mStartPositions [i], mTextures [i]);
 				}
 			}
+		} else {
+			// End of the game !
+			Invoke("EndGame", 2f);
 		}
+	}
+
+	private void EndGame() {
+		Application.Quit ();
 	}
 }

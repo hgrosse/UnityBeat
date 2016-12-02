@@ -7,12 +7,14 @@ public class HitCylinder : MonoBehaviour {
     public Color pressedColor;
 
     private Renderer mRenderer;
+	private ParticleSystem mParticle;
 	private GameScript mGameInstance;
 	private GameObject mHitSphere;
 
     void Start () {
 		GameObject camera = GameObject.FindWithTag ("MainCamera");
 		mGameInstance = camera.GetComponent<GameScript> ();
+		mParticle = GetComponent<ParticleSystem> ();
         mRenderer = GetComponent<Renderer>();
 		mHitSphere = null;
         ToggleColor(false);
@@ -37,6 +39,7 @@ public class HitCylinder : MonoBehaviour {
 			if (mHitSphere != null) {
 				// Gagner des points s'il y a une sphère
 				mGameInstance.AddScore (50);
+				mParticle.Play ();
 				Destroy (mHitSphere);
 				mHitSphere = null;
 			}
