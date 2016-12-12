@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Collections;
+using UnityEngine;
 
 namespace AssemblyCSharp
 {
@@ -15,7 +16,7 @@ namespace AssemblyCSharp
 	 * Les autres nombres sont des combinaisons des autres.
 	 */
 	public class LevelReader {
-		private int[] mBeats;
+		private string[] mBeats;
 		private string mFolder;
 		private int mCursor;
 
@@ -28,8 +29,7 @@ namespace AssemblyCSharp
 		 * Crée un nouveau lecteur de niveau.
 		 * levelRootFolder est le nom du dossier qui contient les niveaux.
 		 */ 
-		public LevelReader (string levelRootFolder) {
-			mFolder = levelRootFolder;
+		public LevelReader () {
 			mCursor = 0;
 		}
 
@@ -37,18 +37,8 @@ namespace AssemblyCSharp
 		 * Charge un niveau donné par son nom.
 		 */ 
 		public void LoadLevel(string levelName) {
-			StreamReader reader = new StreamReader (mFolder + "/" + levelName + ".txt");
-			ArrayList list = new ArrayList ();
-			string readLine = null;
-
-			while ((readLine = reader.ReadLine ()) != null) {
-				int value = int.Parse (readLine);
-				list.Add (value);
-			}
-
-			mBeats = new int[list.Count];
-			list.CopyTo (mBeats);
-			reader.Close();
+			TextAsset level = Resources.Load ("levels/" + levelName) as TextAsset;
+			mBeats = level.text.Split(new char[] {'\n'});
 			mCursor = 0;
 		}
 
@@ -64,7 +54,7 @@ namespace AssemblyCSharp
 		 * Récupère la valeur du prochain battement et passe au suivant.
 		 */ 
 		public int NextBeat() {
-			return mBeats [mCursor++];
+			return int.Parse(mBeats [mCursor++]);
 		}
 
 		/**

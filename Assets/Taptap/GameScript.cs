@@ -35,7 +35,7 @@ public class GameScript : MonoBehaviour {
 
 		mGUIScore = GetComponent<GUIText>();
 		ResetScore ();
-		mLevel = new LevelReader ("Assets/TapTap/Levels");
+		mLevel = new LevelReader ();
 		mLevel.LoadLevel ("KnockOnWood");
 
 		mAudio.PlayDelayed (2f);
@@ -87,12 +87,13 @@ public class GameScript : MonoBehaviour {
 				}
 			}
 		} else {
-			// End of the game !
-			Invoke("EndGame", 2f);
+			// La partie est finie !
+			Invoke("OnGameEnded", 5f);
 		}
 	}
 
-	private void EndGame() {
+
+	private void OnGameEnded() {
 		SceneManager.LoadScene ("MainMenu");
 	}
 }
